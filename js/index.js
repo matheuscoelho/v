@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -33,17 +33,52 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        console.log('Received Device Ready Event');
+        console.log('calling setup pushh');
+
+        app.setupPush();
+
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+    setupPush: function() {
+        console.log('calling push init');
+        var push = PushNotification.init({
+            "android": {
+                "senderID": "249880936399"
+            },
+            "browser": {},
+            "ios": {
+                "sound": true,
+                "vibration": true,
+                "badge": true
+            },
+            "windows": {}
+        });
+        
+        console.log('after init');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        push.on('registration', function(data) {
+            console.log('registration event: ' + data.registrationId);
 
-        console.log('Received Event: ' + id);
+            var oldRegId = localStorage.getItem('registrationId');
+            if (oldRegId !== data.registrationId) {
+                // Save new registration ID
+                localStorage.setItem('registrationId', data.registrationId);
+                // Post registrationId to your app server as the value has changed
+            }
+        });
+
+        push.on('error', function(e) {
+            console.log("push error = " + e.message);
+        });
+
+        push.on('notification', function(data) {
+            console.log('notification event');
+            navigator.notification.alert(
+                data.message,         // message
+                null,                 // callback
+                data.title,           // title
+                'Ok'                  // buttonName
+                );
+        });
     }
 };
