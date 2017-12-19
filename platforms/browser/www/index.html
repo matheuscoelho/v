@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *"
+    />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+-->
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+<title>VIPS.IO</title>
+
+<link rel="icon" type="image/png" href="img/logo.png" />
+
+
+<!-- Bootstrap -->
+<link href="vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- bootstrap-progressbar -->
+<link href="vendors/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+
+<!-- Switchery -->
+<link href="vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="build/css/custom.css" rel="stylesheet">
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+
+<style type="text/css">
+.del_tr {
+    cursor: pointer;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+
+</head>
+
+<body class="nav-md">
+    <div class="container body app" id="template" style="display:none;">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="scroll-view">
+                    <!--<div class="navbar nav_title" style="border: 0;">
+                        <center><a href="index.html" class="site_title"><i class="glyphicon glyphicon-send "></i> <span>PRIME!</span></a></center>
+                    </div>-->
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src="images/user.png" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Bem vindo</span>
+                            <h2></h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Geral</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <li>
+                                        <a href="#" id="agendar_a" />
+                                        <i class="fa fa-calendar"></i> Agendar</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="reservas_a" />
+                                        <i class="fa fa-cubes"></i> Reservas</a>
+                                    </li>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="images/user.png" alt="">
+                                    <span id="usuario_span"></span>
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <!--<li><a href="javascript:;"> Foto de perfil</a></li>
+                                    <li><a href="javascript:;"> Perfil</a></li>
+                                    <li><a href="javascript:;"> Alterar senha</a></li>-->
+                                    <li>
+                                        <a href="#" id="sair_a">
+                                            <i class="fa fa-sign-out pull-right"></i> Sair</a>
+                                        </li>
+                                    </ul>
+
+
+                                    <li role="presentation" class="dropdown" id="qtde_notificacoes_li">
+                                        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-envelope-o"></i>
+                                            <span class="badge bg-green" id="qtde_notificacoes"></span>
+                                        </a>
+                                        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+
+
+                                        </ul>
+                                    </li>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /top navigation -->
+
+                <!-- conteudo -->
+                <div class="right_col" role="main">
+
+                    <!--
+                    <div class="alert alert-success fechaClick">
+                    </div>
+                    <div class="alert alert-danger fechaClick">
+                        <strong>Ops!</strong> 
+                    </div>-->
+                    <div id="conteudo_pag">
+
+                        <div id="lay_empresa">
+                            <style>
+                            #capa_perfil{
+                                width: 100%;
+                                height: 250px;
+                                float: left;
+                                background-position:top center;
+                                background-repeat:no-repeat;
+                                background-color: #000;
+                                background-size: auto 110%;
+                            }
+                            #subcapa_perfil{
+                                background-color: rgba(0,0,0,0.3);
+                                width: 100%;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                padding-top: 40px;
+                            }
+
+                            #foto_perfil img{
+                                width: 100%;
+                            }
+
+                            #foto_perfil{
+                                width: 100px;
+                                height: 100px;
+                                margin: 0 auto;
+
+                                -webkit-border-radius: 50%;
+                                -moz-border-radius: 50%;
+                                border-radius: 50%;
+
+                                -webkit-box-shadow: 3px 3px 25px 0px rgba(255,255,255,1);
+                                -moz-box-shadow: 3px 3px 25px 0px rgba(255,255,255,1);
+                                box-shadow: 3px 3px 25px 0px rgba(255,255,255,1);
+                                overflow: hidden;
+
+                            }
+                            #nome_perfil{
+                                width: 100%;
+                                height: 20px;
+                                text-align: center;
+                                color: #FFF;
+                                font-size: 20px;
+                            }
+                            #descricao_perfil{
+                                width: 100%;
+                                height: 12px;
+                                text-align: center;
+                                color: #CCC;
+                                font-size: 12px;
+                                margin-top:10px; 
+                            }
+                            #menu_perfil{
+                                float: left;
+                                width: 100%;
+                                color: #FFF;
+                                font-size: 15px;
+                                position: relative;
+                                background-color: #999;
+                                position: relative;
+                            }
+
+                            #menu_perfil div{
+                                width: 15vw;
+                                height: 15vw;
+                                max-height: 15vh;
+                                max-width: 15vh;
+
+                                position: absolute;
+                                -webkit-border-radius: 50%;
+                                -moz-border-radius: 50%;
+                                border-radius: 50%;
+                            }
+
+
+                            #menu_perfil p{
+                                height: 100%;
+                                width: 100%;
+
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                            }
+
+                            #menu_perfil i{
+                                font-size: 20px;
+                            }
+
+                            #menul_perfil{
+
+                                position: absolute;
+                                top: -7.5vw; 
+                                left: 0; right: 0;
+                                margin: auto;
+                                background-color: #6d0303;
+                            }
+
+
+                            #linha_perfil{
+
+                                position: absolute;
+                                top: -7.5vw; 
+                                left: 15vw; 
+                                margin: auto;
+                                background-color: #6d0303;
+                            }
+
+
+                            #fotos_perfil{
+
+                                position: absolute;
+                                top: -7.5vw; 
+                                right: 15vw;
+                                margin: auto;
+                                background-color: #6d0303;
+                            }
+
+
+
+                            </style>
+                            <div id="capa_perfil" style="background-image: url(http://askanastronomer.org/img/sunset.jpg)">
+                                <div id="subcapa_perfil">
+                                    <div id="foto_perfil">
+                                        <img src="http://vipsio.com.br/img/lojas/miniatura/test1.png">
+                                    </div>
+                                    <div id="nome_perfil">Vips.IO</div>
+                                    <div id="descricao_perfil">Classificação</div>
+                                </div>
+                                <div id="menu_perfil">
+                                    <div id="linha_perfil">
+                                        <p><i class="fa fa-rss"></i></p>
+                                    </div>
+                                    <div id="menul_perfil" class="ativo2">
+                                        <p><i class="fa fa-bolt"></i></p>
+                                    </div>
+                                    <div id="fotos_perfil">
+                                        <p><i class="fa fa-folder-open-o"></i></p>
+                                    </div>
+                                </div>
+
+                                <div id="pesquisa_menu">
+                                    <span id="pesquisa_icon_menu">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <span id="pesquisar_text_menu">
+                                        <input type="text" name="pesquisar_text_menu" id="pesquisar_in_menu" placeholder="Pesquisar">
+                                    </span>
+                                </div>
+
+                                <div id="menu_cardapio">
+
+                                    <form method="POST" id="finalizar_form">
+                                        <input type="hidden" name="id_empresa" id="id_empresa_finaliza" value="3">
+
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Prato 1</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input class="id_produto" name="id_produto[]" id_produto="1" nome_produto="teste1" preco_produto="20" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Prato 2</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input preco_produto="22" nome_produto="teste2" class="id_produto" name="id_produto[]" id_produto="2" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Prato 3</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input preco_produto="23" nome_produto="teste3" class="id_produto" name="id_produto[]" id_produto="3" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Vips.io</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input preco_produto="24" nome_produto="teste4" class="id_produto" name="id_produto[]" id_produto="4" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Vips.io</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input preco_produto="25" nome_produto="teste5" class="id_produto" name="id_produto[]" id_produto="5" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Vips.io</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input preco_produto="26" nome_produto="teste6" class="id_produto" name="id_produto[]" id_produto="6" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="linha_menu">
+                                            <div class="foto_menu"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                                            <div class="loja_menu">
+                                                <p class="nome_menu">Vips.io</p>
+                                                <p class="preco_menu">R$ 40,00</p>
+                                                <p class="ingredientes_menu">entre e sai sem filas</p>
+                                            </div>
+                                            <div class="op_menu">
+                                                <div class="menos_menu"><i class="fa fa-sort-desc"></i></div>
+                                                <div class="quantidade_menu"><input preco_produto="27" nome_produto="teste7" class="id_produto" name="id_produto[]" id_produto="7" type="number" value="0" min="0" step="1"></div>
+                                                <div class="mais_menu"><i class="fa fa-sort-asc"></i></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="finalizar_pedido">
+                                            <input type="submit" id="bnt_finaliza" value="FINALIZAR">
+                                        </div>
+                                    </form> 
+                                </div>
+                            </div>
+                            <!-- /fim conteudo -->
+                        </div>
+                    </div>
+
+
+                    <div id="menu_rapido" class="col-md-12 col-sm-12 col-xs-12"> 
+                        <div id="mr_inicio"><i class="fa fa-home"></i></div>
+                        <div id="mr_pesquisa"><i class="fa fa-search"></i></div>
+                        <div id="mr_camera"><i class="fa fa-camera-retro"></i></div>
+                        <div id="mr_galeria"><i class="fa fa-picture-o"></i></div>
+                        <div id="mr_perfil"><i class="fa fa-user"></i></div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div id="telas_container" class="app" onclick="">
+
+                    <!-- TELA INICIAL DO SISTEMA -->
+                    <div id="inicio" class="view" style="display: none;" tela="1">
+                        <div id="inicio_con">
+                            <div id="inicio_1">
+                                <img src="img/logo.png">
+                            </div>
+
+                            <div id="inicio_2" class="entrar_bnt">
+                                <form method="POST" id="entrar_form">
+                                    <div>
+                                        <div id="entrar_sussesso" style="color:green; text-transform: none;"></div>
+                                        <div class="div_erro" style="display: none;"></div>
+                                        <div id="inicio_3">
+                                            <input type="text" name="usuario" placeholder="NOME DE USUARIO OU E-MAIL" id="usuario">
+                                        </div>
+                                        <div id="inicio_4">
+                                            <input type="password" placeholder="SENHA" name="senha" id="senha">
+                                        </div>
+                                        <!-- <div id="entrar_6"><p>Esqueceu sua senha?</p></div>-->
+                                    </div>
+                                    <div id="inicio_5">
+                                        <input type="submit" value="ENTRAR">
+                                    </div>
+                                </form>
+                            <!--
+                            <div id="inicio_6" class="cadastrar_bnt">
+                            <h1>CRIAR CONTA</h1>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- TELA DE AGENDAMENTO -->
+            <div id="agendamento" class="view" style="display: none;" tela="4">
+                <form method="POST" id="agendamento_form">
+                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="funcionario">Funcionário
+                        <span class="required">*</span>
+                    </label>
+                    <div class="control-label col-md-12 col-sm-12 col-xs-12 funcionarios_div"></div>
+
+                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="servicos">Serviços
+                        <span class="required">*</span>
+                    </label>
+                    <div class="control-label col-md-12 col-sm-12 col-xs-12 servicos_div"></div>
+
+                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="data_agendamento">Data
+                        <span class="required">*</span>
+                    </label>
+                    <div class="control-label col-md-12 col-sm-12 col-xs-12">
+                        <input type="date" placeholder="Informe uma data" id="data_agendamento" name="data_agendamento" required="required" class="form-control col-md-12 col-xs-12"
+                        />
+                    </div>
+
+                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="horario">Escolha um horário
+                        <span class="required">*</span>
+                    </label>
+                    <div class="control-label col-md-12 col-sm-12 col-xs-12 horario_div"></div>
+
+                    <button type="submit" class="btn btn-secondary btn-sm" style="margin-top:10px;">Reservar</button>
+                </form>
+            </div>
+
+
+
+            <!-- PEDIDOS PARA AGENDAMENTO -->
+            <div id="pedidos" class="view" style="display: none;" tela="5">
+            </div>
+
+
+
+            <!-- CADASTRO -->
+            <div id="cadastrar" class="view" style="display: none;" tela="3">
+                <form method="POST" id="cadastrar_form">
+                    <div style="width:80vw; height:70vh">
+                        <div id="cadastrar_1">
+                            <h1>Cadastrar</h1>
+                        </div>
+                        <div id="cad_div_erro" style="color:red; text-transform: none;"></div>
+                        <div id="entrar_2">
+                            <p>NOME DE USUARIO</p>
+                        </div>
+                        <div id="entrar_3">
+                            <input type="text" name="usuario" id="cad_usuario" required>
+                        </div>
+                        <div id="cadastrar_4">
+                            <p>SENHA</p>
+                        </div>
+                        <div id="cadastrar_5">
+                            <input type="password" name="senha" id="cad_senha" required>
+                        </div>
+                        <div id="cadastrar_6">
+                            <p>EMAIL</p>
+                        </div>
+                        <div id="cadastrar_7">
+                            <input type="email" name="email" id="cad_email" required>
+                        </div>
+                        <div id="cadastrar_8">
+                            <p>CELULAR</p>
+                        </div>
+                        <div id="cadastrar_9">
+                            <input type="text" name="cel" id="cad_cel" required>
+                        </div>
+
+                        <div id="cadastrar_10">
+                            <input id="bnt_cadastrar_api" type="submit" value="CADASTRAR">
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <!-- TELA DE PESQUISA -->
+            <div id="pesquisa" class="view" style="display: none;" tela="6">
+                <div id="pesquisar_div">
+                    <span id="pesquisa_icon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <span id="pesquisar_text">
+                        <input type="text" name="pesquisar_text" id="pesquisar_in" placeholder="Pesquisar">
+                    </span>
+                    <hr>
+                </div>
+
+                <div id="pesquisa_conteudo">
+                    <div class="linha_pesquisa">
+                        <div class="foto_pesquisa"><img src="http://vipsio.com.br/img/lojas/miniatura/test1.png"></div>
+                        <div class="loja_pesquisa">
+                            <p class="nome_pesquisa">Vips.io</p>
+                            <p class="tags_pesquisa">entre e sai sem filas</p>
+                        </div>  
+                    </div>
+
+                    <div class="linha_pesquisa">
+                        <div class="foto_pesquisa"><img src="http://vipsio.com.br/img/lojas/miniatura/test2.png"></div>
+                        <div class="loja_pesquisa">
+                            <p class="nome_pesquisa">Malucao</p>
+                            <p class="tags_pesquisa">sou loção</p>
+                        </div>  
+                    </div>
+
+                    <div class="linha_pesquisa">
+                        <div class="foto_pesquisa"><img src="http://vipsio.com.br/img/lojas/miniatura/test3.png"></div>
+                        <div class="loja_pesquisa">
+                            <p class="nome_pesquisa">funfou</p>
+                            <p class="tags_pesquisa">funfando</p>
+                        </div>  
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+        <!-- Bootstrap -->
+        <script src="vendors/bootstrap/bootstrap.min.js"></script>
+        <!-- NProgress -->
+        <script src="vendors/nprogress/nprogress.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- Datatables -->
+
+        <!-- tela de bloqueio durante os submits -->
+        <script src="vendors/jquery.blockUI.js"></script>
+        <!-- mascaras-->
+        <script src="vendors/mascara.min.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="build/js/custom.js"></script>
+
+        <!-- Switchery -->
+        <script src="vendors/switchery/dist/switchery.min.js"></script>
+        <!-- Datatables -->
+
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <script src="http://vipsio.com.br:3001/socket.io/socket.io.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="js/pesquisar.js"></script>
+
+        <script type="text/javascript" type="text/javascript">
+
+        </script>
+
+
+    </body >
+    </html >

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.phonegap.sremilio" version="1.10.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Sr. Emílio</name>
+    <description>
+        A barbearia desde 1948.
+    </description>
+    <author email="contato@vipsio.com.br" href="http://vipsio.com.br">
+        Vips.IO
+    </author>
+    <content src="index.html" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="14" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#ee6e73" />
+    <preference name="StatusBarStyle" value="blacktranslucent" />
+    <preference name="fullscreen" value="false" />
+    <icon src="res/icon.png" />
+    <splash src="res/icon.png" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <plugin name="phonegap-plugin-push" spec="^1.8.4">
+        <variable name="SENDER_ID" value="" />
+    </plugin>
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+</widget>

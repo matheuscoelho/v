@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "249880936399",
+    "project_id": "sremilio-186420"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249880936399:android:c405010547cb08af",
+        "android_client_info": {
+          "package_name": "br.com.sremilio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249880936399-iid7oho99i48r60gqm7712hji0gvh401.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6ovDBncsnJHCOZJxxl9wVuKu9I6Oe9Q0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
